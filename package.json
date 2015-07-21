@@ -1,0 +1,22 @@
+{
+  "name": "recipebox",
+  "version": "1.0.0",
+  "description": "the web server for the recipebox project",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harvardd4d/recipebox-server2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harvardd4d/recipebox-server2/issues"
+  },
+  "homepage": "https://github.com/harvardd4d/recipebox-server2#readme"
+}

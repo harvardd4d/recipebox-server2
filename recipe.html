@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecipeBox</title>
+  <!-- Bootstrap 3 css -->
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <!-- Angular.js -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.js"></script>
+  <!-- Angular-xeditable -->
+  <link href="http://vitalets.github.io/angular-xeditable/starter/angular-xeditable/css/xeditable.css" rel="stylesheet">
+  <script src="http://vitalets.github.io/angular-xeditable/starter/angular-xeditable/js/xeditable.js"></script>
+  <!-- app.js -->
+  <script>
+  var app = angular.module('app', ['xeditable'])
+
+  app.run(function (editableOptions) {
+    editableOptions.theme = 'bs3'
+  })
+
+  app.controller('RecipesCtrl', function ($scope) {
+    $scope.recipe = 
+    {
+      name: 'Egg fried rice',
+      description: 'Fried rice with scrambled eggs',
+      cuisine: 35,
+      meal: 111,
+      ingredients: [ 
+        {
+          quantity: 1,
+          units: '',
+          name: 'egg'
+        }, 
+        {
+          quantity: 1.5,
+          units: 'cup',
+          name: 'rice'
+        },
+      ],
+      instructions: "Cook rice. \nFry eggs. \nAdd rice and continue frying",
+      recipe_id: 256
+    }
+
+    // show ingredient if they are not marked to be deleted
+    $scope.filterIngredient = function(ingredient) {
+      return ingredient.isDeleted !== true;
+    }
+
+    // mark ingredient as deleted
+    $scope.deleteIngredient = function(ingredient) {
+      $scope.recipe.ingredients.forEach(function(otherIngredient) {
+        if (otherIngredient == ingredient) {
+          otherIngredient.isDeleted = true
+        }
+      })
+    }
+
+    // add new ingredient to list
+    $scope.addIngredient = function () {
+      $scope.recipe.ingredients.push({
+        quantity: 0,
+        units: '',
+        name: '',
+        isNew: true
+      })
+    }
+
+    // cancel all changes
+    $scope.cancel = function() {
+      for (var i = $scope.recipe.ingredients.length; i--;) {
+        var ingredient = $scope.recipe.ingredients[i];    
+        // undelete
+        if (ingredient.isDeleted) {
+          delete ingredient.isDeleted;
+        }
+        // remove new 
+        if (ingredient.isNew) {
+          $scope.recipe.ingredients.splice(i, 1);
+        }      
+      }
+    }
+
+    // save edits
+    $scope.saveTable = function() {
+      var results = [];
+      for (var i = $scope.recipe.ingredients.length; i--;) {
+        var ingredient = $scope.recipe.ingredients[i];
+        // actually delete user
+        if (ingredient.isDeleted) {
+          $scope.recipe.ingredients.splice(i, 1);
+        }
+        // mark as not new 
+        if (ingredient.isNew) {
+          delete ingredient.isNew;
+        }
+
+        // send on server
+        //results.push($http.post('/saveUser', user));      
+      }
+    }
+  })
+  </script>
+</head>
+<body>
+  <nav class='navbar navbar-default'>
+    <div class='container'>
+      <ul class='nav navbar-nav'>
+        <li><a href="/#/">Home</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div ng-controller='RecipesCtrl' class='container'>
+    <form editable-form name='recipeForm' oncancel="cancel()" onaftersave="saveTable()">
+
+      <div> 
+        <strong ng-show='recipeForm.$visible'>Recipe name:</strong>
+        <h1 editable-text='recipe.name'>{{recipe.name}}</h1>
+      </div>
+
+      <div ng-show='recipeForm.$visible'>
+        <strong>Cuisine:</strong>
+        <span editable-number='recipe.cuisine' e-step='1'>{{recipe.cuisine}}</span>
+        <br>
+        <strong>Meal:</strong>
+        <span editable-number='recipe.meal' e-step='1'>{{recipe.meal}}</span>
+      </div>
+
+      <div>
+        <h2>Description</h2>
+        <div editable-textarea="recipe.description" e-rows="7" e-cols="200" style='white-space: pre;' class='well'>{{ recipe.description || 'no description' }}</div>
+      </div>
+
+      <div>
+        <h2>Ingredients</h2>
+          <!-- View recipes list -->
+          <ul ng-show="!recipeForm.$visible" class='list-group'>
+            <li ng-repeat='ingred in recipe.ingredients' class='list-group-item'>
+              <span>{{ ingred.quantity }} {{ ingred.units }} {{ ingred.name }}</span>
+            </li>
+          </ul>
+          <!-- Edit recipes table -->
+          <table ng-show="recipeForm.$visible" class="table table-bordered table-hover table-condensed">
+            <tr style="font-weight: bold">
+              <td>Quantity</td>
+              <td>Units</td>
+              <td>Ingredient</td>
+              <td><span ng-show="recipeForm.$visible">Action</span></td>
+            </tr>
+            <tr ng-repeat="ingred in recipe.ingredients | filter:filterIngredient">
+              <td>
+                <span editable-number="ingred.quantity" e-step='any' e-form="recipeForm">
+                  {{ ingred.quantity || 'empty' }}
+                </span>
+              </td>
+              <td>
+                <span editable-text="ingred.units" e-form="recipeForm">
+                  {{ ingred.units }}
+                </span>
+              </td>
+              <td>
+                <span editable-text="ingred.name" e-form="recipeForm">
+                  {{ ingred.name }}
+                </span>
+              </td>
+              <td><button type="button" ng-show="recipeForm.$visible" ng-click='deleteIngredient(ingred)' class="btn btn-danger">Del</button></td>
+            </tr>
+          </table>
+          <button type='button' ng-show='recipeForm.$visible' class="btn btn-default" ng-click='addIngredient()' ng-disabled="recipeForm.$waiting">Add row</button>
+      </div>
+
+      <div>
+        <h2>Instructions</h2>
+        <div editable-textarea="recipe.instructions" e-rows="7" e-cols="200" style="white-space: pre;" class='well'>{{ recipe.instructions || 'no instructions' }}</div>
+      </div>
+
+      <div class="buttons">
+        <!-- button to show form -->
+        <button type="button" class="btn btn-default" ng-click="recipeForm.$show()" ng-show="!recipeForm.$visible">
+          Edit
+        </button>
+        <!-- buttons to submit / cancel form -->
+        <span ng-show="recipeForm.$visible">
+          <button type="submit" class="btn btn-primary" ng-disabled="recipeForm.$waiting">
+            Save
+          </button>
+          <button type="button" class="btn btn-default" ng-disabled="recipeForm.$waiting" ng-click="recipeForm.$cancel()">
+            Cancel
+          </button>
+        </span>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
+
+
