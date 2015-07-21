@@ -18,5 +18,13 @@
   "bugs": {
     "url": "https://github.com/harvardd4d/recipebox-server2/issues"
   },
-  "homepage": "https://github.com/harvardd4d/recipebox-server2#readme"
+  "homepage": "https://github.com/harvardd4d/recipebox-server2#readme",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "express": "^4.13.1",
+    "gulp": "^3.9.0",
+    "gulp-typescript": "^2.8.0",
+    "lodash": "^3.10.0",
+    "mongoose": "^4.0.8"
+  }
 }
