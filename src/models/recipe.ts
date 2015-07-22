@@ -1,7 +1,7 @@
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../../typings/tsd.d.ts" />
 import db = require('../db')
 
-var Recipe = db.model('Recipe', {
+var Recipe = db.model("Recipe", new db.Schema({
   name: {type: String, required: true},
   description: {type: String, required: true},
   cuisine: {type: Number, required: true},
@@ -15,5 +15,5 @@ var Recipe = db.model('Recipe', {
   ],
   instructions: {type: String, required: true},
   recipeId: {type: Number, required: true}
-})
-module.exports = Recipe
+}))
+export = Recipe

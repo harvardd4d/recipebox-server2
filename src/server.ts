@@ -1,6 +1,7 @@
 /// <reference path="../typings/tsd.d.ts" />
 import express = require('express')
 import bodyParser = require('body-parser')
+import Recipe = require('./models/recipe')
 
 var app = express()
 app.use(bodyParser.json())
@@ -33,10 +34,20 @@ app.get('/api/recipe/:recipeId', function(req, res) {
   }
 })
 
-app.post('/api/recipe/', function(req, res) {
-  console.log('recipe received!')
-  console.log(req.body)
-  res.sendStatus(201)
+app.post('/api/recipe/', function(req, res, next) {
+  var recipe = new Recipe({
+    name: req.body.name,
+    description: req.body.description,
+    cuisine: req.body.cuisine,
+    meal: req.body.meal,
+    ingredients: req.body.ingredients,
+    instructions: req.body.instructions,
+    recipeId: req.body.recipeId
+  })
+  recipe.save(function (err, post) {
+    if (err) { return next(err) }
+    res.json(201, post)
+  })
 })
 app.listen(3000, function() {
   console.log("Server listening on", 3000)
