@@ -24,6 +24,24 @@ app.get('/api/recipes/:id', function(req, res, next) {
   })
 })
 
+app.put('/api/recipes/:id', function(req, res, next) {
+  var id: string = req.params.id
+  var recipe = new Recipe({
+    name: req.body.name,
+    description: req.body.description,
+    cuisine: req.body.cuisine,
+    meal: req.body.meal,
+    ingredients: req.body.ingredients,
+    instructions: req.body.instructions,
+    _id: req.body._id
+  })
+  Recipe.findOneAndUpdate({_id: new ObjectId(id)}, recipe, {upsert:true},
+    function(err, recipe) {
+      if (err) { next(err) }
+      return res.json(recipe)
+    })
+})
+
 app.post('/api/recipes/', function(req, res, next) {
   var recipe = new Recipe({
     name: req.body.name,
