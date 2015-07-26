@@ -36,6 +36,13 @@ router.put('/:id', function(req, res, next) {
     })
 })
 
+router.get('/', function(req, res, next) {
+  Recipe.find(function(err, recipes) {
+    if (err) { return next(err) }
+    res.json(recipes)
+  })
+})
+
 router.post('/', function(req, res, next) {
   var recipe = new Recipe({
     name: req.body.name,
