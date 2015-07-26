@@ -2,6 +2,7 @@
 var app = angular.module('app', [
   'ngRoute',
   'xeditable'
+  'schemaForm'
 ])
 
 app.run(function (editableOptions) {

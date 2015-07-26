@@ -1,7 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 angular.module('app')
 .controller('RecipeViewCtrl', function ($scope, $routeParams, RecipesSvc) {
-    var defaultId = '55b41e0352f8f6042269ebdd';
+  // var defaultId = '55b41e0352f8f6042269ebdd';
   RecipesSvc.getRecipe($routeParams.id)
   .success(function (recipe) {
     $scope.recipe = recipe
@@ -59,6 +59,6 @@ angular.module('app')
         delete ingredient.isNew;
       }
     }
-    RecipesSvc.saveRecipe('55b41e0352f8f6042269ebdd', $scope.recipe);      
+    RecipesSvc.updateRecipe('55b41e0352f8f6042269ebdd', $scope.recipe);      
   }
 })

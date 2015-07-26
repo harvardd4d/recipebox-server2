@@ -10,4 +10,7 @@ angular.module('app')
   this.updateRecipe = function(id: string, recipe) {
     return $http.put('/api/recipes/' + id, recipe)
   }
+  this.saveNewRecipe = function(recipe) {
+    return $http.post('/api/recipes/', recipe)
+  }
 })
