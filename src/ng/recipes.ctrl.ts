@@ -1,20 +1,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
-var app = angular.module('app', ['xeditable'])
-
-app.run(function (editableOptions) {
-  editableOptions.theme = 'bs3'
-})
-
-app.service('RecipesSvc', function($http) {
-  this.get = function (id: string) {
-    return $http.get('/api/recipes/' + id)
-  }
-  this.put = function(id: string, recipe) {
-    return $http.put('/api/recipes/' + id, recipe)
-  }
-})
-
-app.controller('RecipesCtrl', function ($scope, RecipesSvc) {
+angular.module('app')
+.controller('RecipesCtrl', function ($scope, RecipesSvc) {
   RecipesSvc.get('55b41e0352f8f6042269ebdd')
   .success(function (recipe) {
     $scope.recipe = recipe
