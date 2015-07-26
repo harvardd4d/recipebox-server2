@@ -19,28 +19,13 @@
     editableOptions.theme = 'bs3'
   })
 
-  app.controller('RecipesCtrl', function ($scope) {
-    $scope.recipe = 
-    {
-      name: 'Egg fried rice',
-      description: 'Fried rice with scrambled eggs',
-      cuisine: 35,
-      meal: 111,
-      ingredients: [ 
-        {
-          quantity: 1,
-          units: '',
-          name: 'egg'
-        }, 
-        {
-          quantity: 1.5,
-          units: 'cup',
-          name: 'rice'
-        },
-      ],
-      instructions: "Cook rice. \nFry eggs. \nAdd rice and continue frying",
-      recipeId: 256
-    }
+  app.controller('RecipesCtrl', function ($scope, $http) {
+    $http.get('http://localhost:3000/api/recipes/55b41e0352f8f6042269ebdd')
+    .success(function (recipe) {
+      console.log("success")
+      console.log(recipe)
+      $scope.recipe = recipe
+    })
 
     // show ingredient if they are not marked to be deleted
     $scope.filterIngredient = function(ingredient) {
@@ -83,7 +68,6 @@
 
     // save edits
     $scope.saveTable = function() {
-      var results = [];
       for (var i = $scope.recipe.ingredients.length; i--;) {
         var ingredient = $scope.recipe.ingredients[i];
         // actually delete user
@@ -96,7 +80,7 @@
         }
 
         // send on server
-        //results.push($http.post('/saveUser', user));      
+        //$http.post('/api/posts/55b41e0352f8f6042269ebdd', user);      
       }
     }
   })
@@ -112,7 +96,7 @@
   </nav>
   <div ng-controller='RecipesCtrl' class='container'>
     <form editable-form name='recipeForm' oncancel="cancel()" onaftersave="saveTable()">
-
+    
       <div> 
         <strong ng-show='recipeForm.$visible'>Recipe name:</strong>
         <h1 editable-text='recipe.name'>{{recipe.name}}</h1>

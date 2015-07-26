@@ -2,51 +2,41 @@
 import express = require('express')
 import bodyParser = require('body-parser')
 import Recipe = require('./models/recipe')
+import mongoose = require('mongoose')
+import ObjectId = mongoose.Types.ObjectId
 
 var app = express()
 app.use(bodyParser.json())
 
-app.get('/api/recipe/:recipeId', function(req, res) {
-  var recipeId: number = Number(req.params.recipeId)
-  if (recipeId == 0) {
-    res.json(
-      {
-        name: 'Egg fried rice',
-        description: 'Fried rice with scrambled eggs',
-        cuisine: 35,
-        meal: 111,
-        ingredients: [ 
-          {
-            quantity: 1,
-            units: '',
-            name: 'egg'
-          }, 
-          {
-            quantity: 1.5,
-            units: 'cup',
-            name: 'rice'
-          },
-        ],
-        instructions: "Cook rice. \nFry eggs. \nAdd rice and continue frying",
-        recipe_id: 0
-      }
-    )
-  }
+app.get('/', function(req, res) {
+  res.sendfile('wwwroot/layouts/recipe.html')
 })
 
-app.post('/api/recipe/', function(req, res, next) {
+app.get('/api/recipes/:id', function(req, res, next) {
+  var id: string = req.params.id
+  Recipe.find({_id: new ObjectId(id)}, function(err,results) {
+    if (err) { return next(err) }
+    if (results.length == 0) { 
+      res.json(404) 
+    } else {
+      res.json(results[0])
+    }
+  })
+})
+
+app.post('/api/recipes/', function(req, res, next) {
   var recipe = new Recipe({
     name: req.body.name,
     description: req.body.description,
     cuisine: req.body.cuisine,
     meal: req.body.meal,
     ingredients: req.body.ingredients,
-    instructions: req.body.instructions,
-    recipeId: req.body.recipeId
+    instructions: req.body.instructions
   })
-  recipe.save(function (err, post) {
+  console.log(recipe)
+  recipe.save(function (err, recipe) {
     if (err) { return next(err) }
-    res.json(201, post)
+    res.json(201, recipe)
   })
 })
 app.listen(3000, function() {
