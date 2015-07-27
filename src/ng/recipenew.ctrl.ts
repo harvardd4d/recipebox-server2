@@ -7,7 +7,7 @@ angular.module('app')
       $window.location.href = '/#/recipes/' + recipe._id
     })
     .error( () => {
-      res.send(500)
+      $window.alert("An error occured. Please try again later.")
     })
   }
 
