@@ -13,4 +13,8 @@ angular.module('app')
   this.saveNewRecipe = function(recipe) {
     return $http.post('/api/recipes/', recipe)
   }
+  this.deleteRecipe = function(id: string) {
+    return $http.delete('/api/recipes/' + id) 
+  }
+
 })

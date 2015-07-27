@@ -1,6 +1,6 @@
 /// <reference path="../../typings/tsd.d.ts" />
 angular.module('app')
-.controller('RecipeViewCtrl', function ($scope, $routeParams, RecipesSvc) {
+.controller('RecipeViewCtrl', function ($scope, $window, $routeParams, RecipesSvc) {
   // var defaultId = '55b41e0352f8f6042269ebdd';
   RecipesSvc.getRecipe($routeParams.id)
   .success(function (recipe) {
@@ -59,6 +59,17 @@ angular.module('app')
         delete ingredient.isNew;
       }
     }
-    RecipesSvc.updateRecipe('55b41e0352f8f6042269ebdd', $scope.recipe);      
+    RecipesSvc.updateRecipe($routeParams.id, $scope.recipe);      
+  }
+
+  $scope.deleteRecipe = function () {
+    RecipesSvc.deleteRecipe($scope.recipe._id) 
+    .success( (recipe) => {
+      console.log("success!")
+      $window.location.href = '/#/'
+    })
+    .error( (recipe) => {
+      $window.alert("Recipe could not be deleted. Please try again.")
+    })
   }
 })

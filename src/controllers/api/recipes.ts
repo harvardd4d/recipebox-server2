@@ -29,11 +29,19 @@ router.put('/:id', function(req, res, next) {
     instructions: req.body.instructions,
     _id: req.body._id
   })
-  Recipe.findOneAndUpdate({_id: new ObjectId(id)}, recipe, {upsert:true},
+  Recipe.findByIdAndUpdate(id, recipe, {upsert:true},
     function(err, recipe) {
       if (err) { next(err) }
       return res.json(recipe)
     })
+})
+
+router.delete('/:id', function(req, res, next) {
+  var id: string = req.params.id
+  Recipe.findByIdAndRemove(id, function(err, recipe) {
+    if (err) { next(err) }
+    return res.json
+  })
 })
 
 router.get('/', function(req, res, next) {
@@ -52,7 +60,6 @@ router.post('/', function(req, res, next) {
     ingredients: req.body.ingredients,
     instructions: req.body.instructions
   })
-  console.log(recipe)
   recipe.save(function (err, recipe) {
     if (err) { return next(err) }
     res.json(201, recipe)
