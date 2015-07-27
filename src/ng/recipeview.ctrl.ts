@@ -65,7 +65,6 @@ angular.module('app')
   $scope.deleteRecipe = function () {
     RecipesSvc.deleteRecipe($scope.recipe._id) 
     .success( (recipe) => {
-      console.log("success!")
       $window.location.href = '/#/'
     })
     .error( (recipe) => {

@@ -39,8 +39,8 @@ router.put('/:id', function(req, res, next) {
 router.delete('/:id', function(req, res, next) {
   var id: string = req.params.id
   Recipe.findByIdAndRemove(id, function(err, recipe) {
-    if (err) { next(err) }
-    return res.json
+    if (err) { return next(err) }
+    return res.json(recipe)
   })
 })
 

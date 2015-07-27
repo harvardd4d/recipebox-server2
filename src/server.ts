@@ -7,6 +7,7 @@ app.use(bodyParser.json())
 app.use('/api/recipes', require('./controllers/api/recipes'))
 app.use('/', require('./controllers/static'))
 
-app.listen(3000, function() {
-  console.log("Server listening on", 3000)
+var port = process.env.PORT || 3000
+app.listen(port, function() {
+  console.log("Server listening on", port)
 })

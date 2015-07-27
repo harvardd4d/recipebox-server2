@@ -8,6 +8,8 @@ var nodemon = require('gulp-nodemon')
 
 gulp.task('default', ['ts-ng', 'ts-server', 'watch-ts', 'server'])
 
+gulp.task('build', ['ts-ng', 'ts-server'])
+
 // run server + watch for js changes
 gulp.task('server', function() {
   nodemon({
