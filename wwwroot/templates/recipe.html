@@ -1,0 +1,84 @@
+<div class='container'>
+  <form editable-form name='recipeForm' oncancel="cancel()" onaftersave="saveTable()">
+  
+    <div> 
+      <strong ng-show='recipeForm.$visible'>Recipe name:</strong>
+      <h1 editable-text='recipe.name'>{{recipe.name}}</h1>
+    </div>
+
+    <div ng-show='recipeForm.$visible'>
+      <strong>Cuisine:</strong>
+      <span editable-number='recipe.cuisine' e-step='1'>{{recipe.cuisine}}</span>
+      <br>
+      <strong>Meal:</strong>
+      <span editable-number='recipe.meal' e-step='1'>{{recipe.meal}}</span>
+    </div>
+
+    <div>
+      <h2>Description</h2>
+      <div editable-textarea="recipe.description" e-rows="7" e-cols="200" style='white-space: pre;' class='well'>{{ recipe.description || 'no description' }}</div>
+    </div>
+
+    <div>
+      <h2>Ingredients</h2>
+        <!-- View recipes list -->
+        <ul ng-show="!recipeForm.$visible" class='list-group'>
+          <li ng-repeat='ingred in recipe.ingredients' class='list-group-item'>
+            <span>{{ ingred.quantity }} {{ ingred.units }} {{ ingred.name }}</span>
+          </li>
+        </ul>
+        <!-- Edit recipes table -->
+        <table ng-show="recipeForm.$visible" class="table table-bordered table-hover table-condensed">
+          <tr style="font-weight: bold">
+            <td>Quantity</td>
+            <td>Units</td>
+            <td>Ingredient</td>
+            <td><span ng-show="recipeForm.$visible">Action</span></td>
+          </tr>
+          <tr ng-repeat="ingred in recipe.ingredients | filter:filterIngredient">
+            <td>
+              <span editable-number="ingred.quantity" e-step='any' e-form="recipeForm">
+                {{ ingred.quantity || 'empty' }}
+              </span>
+            </td>
+            <td>
+              <span editable-text="ingred.units" e-form="recipeForm">
+                {{ ingred.units }}
+              </span>
+            </td>
+            <td>
+              <span editable-text="ingred.name" e-form="recipeForm">
+                {{ ingred.name }}
+              </span>
+            </td>
+            <td><button type="button" ng-show="recipeForm.$visible" ng-click='deleteIngredient(ingred)' class="btn btn-danger">Del</button></td>
+          </tr>
+        </table>
+        <button type='button' ng-show='recipeForm.$visible' class="btn btn-default" ng-click='addIngredient()' ng-disabled="recipeForm.$waiting">Add row</button>
+    </div>
+
+    <div>
+      <h2>Instructions</h2>
+      <div editable-textarea="recipe.instructions" e-rows="7" e-cols="200" style="white-space: pre;" class='well'>{{ recipe.instructions || 'no instructions' }}</div>
+    </div>
+
+    <div class="buttons">
+      <!-- button to show form -->
+      <button type="button" class="btn btn-default" ng-click="recipeForm.$show()" ng-show="!recipeForm.$visible">
+        Edit
+      </button>
+      <!-- buttons to submit / cancel form -->
+      <span ng-show="recipeForm.$visible">
+        <button type="submit" class="btn btn-primary" ng-disabled="recipeForm.$waiting">
+          Save
+        </button>
+        <button type="button" class="btn btn-default" ng-disabled="recipeForm.$waiting" ng-click="recipeForm.$cancel()">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-danger pull-right" ng-disabled="recipeForm.$waiting" ng-click="deleteRecipe()">
+        Delete
+        </button>
+      </span>
+    </div>
+  </form>
+</div>

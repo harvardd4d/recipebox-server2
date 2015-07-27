@@ -1,0 +1,22 @@
+<div class='container'>
+  <h1>Recipes</h1>
+  <form role='form'>
+    <div class='form-group'>
+      <div class='input-group'>
+        <span class='input-group-btn'>
+          <button onclick="location.href='/#/recipes/new'" class='btn btn-primary btn-block round'>
+            New Recipe
+          </button>
+        </span>
+      </div>
+    </div>
+  </form>
+  <div class='list-group'>
+    <div ng-repeat='recipe in recipes'>
+      <a href="/#/recipes/{{recipe._id}}" class="list-group-item">
+        <h4 class="list-group-item-heading">{{recipe.name}}</h4>
+        <p class="list-group-item-text">{{recipe.description}}</p>
+      </a>
+    </div>
+  </div>
+</div>
