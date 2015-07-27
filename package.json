@@ -34,6 +34,6 @@
   },
   "scripts": {
     "start": "node wwwroot/server.js",
-    "postinstall": "tsd install && gulp build"
+    "postinstall": "gulp build"
   }
 }
