@@ -1,8 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 import db = require('../db')
-import mongoose = require('mongoose')
 
-var Schema = mongoose.Schema
+var Schema = db.Schema
 
 var Ingredient = new Schema({
   quantity: {type: Number, required: true},
@@ -10,7 +9,7 @@ var Ingredient = new Schema({
   name: {type: String, required: true}
 })
 
-var Recipe = mongoose.model("Recipe", new mongoose.Schema({
+var Recipe = db.model("Recipe", new Schema({
   name: {type: String, required: true},
   description: {type: String, required: true},
   cuisine: {type: Number, required: true},

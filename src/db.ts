@@ -1,5 +1,6 @@
 /// <reference path="../typings/tsd.d.ts" />
 import mongoose = require('mongoose')
+console.log("attempting to load mongoose")
 var url = process.env.MONGOLAB_URI || 'mongodb://localhost/recipebox'
 mongoose.connect(url, function (err) {
   if (err) {

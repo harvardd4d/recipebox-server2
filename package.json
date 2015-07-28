@@ -7,13 +7,14 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node wwwroot/server.js",
+    "postinstall": "tsd install && bower install && gulp build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/harvardd4d/recipebox-server2.git"
   },
-  "author": "",
+  "author": "Richard Zou",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/harvardd4d/recipebox-server2/issues"
@@ -21,6 +22,7 @@
   "homepage": "https://github.com/harvardd4d/recipebox-server2#readme",
   "dependencies": {
     "body-parser": "^1.13.2",
+    "bower": "^1.4.1",
     "express": "^4.13.1",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
@@ -30,11 +32,8 @@
     "gulp-typescript": "^2.8.0",
     "gulp-uglify": "^1.2.0",
     "lodash": "^3.10.0",
-    "mongoose": "^4.0.8"
-  },
-  "scripts": {
-    "start": "node wwwroot/server.js",
-    "postinstall": "gulp build"
+    "mongoose": "^4.0.8",
+    "tsd": "^0.6.3"
   },
   "engines": {
     "node": "0.12.7"

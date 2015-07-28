@@ -1,0 +1,24 @@
+{
+  "name": "recipebox-server2",
+  "version": "0.0.0",
+  "homepage": "https://github.com/harvardd4d/recipebox-server2",
+  "authors": [
+    "Richard Zou"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "src",
+    "node_modules",
+    "bower_components",
+    "wwwroot/public/js"
+  ],
+  "dependencies": {
+    "angular": "~1.4.3",
+    "angular-xeditable": "~0.1.9",
+    "angular-schema-form": "~0.8.4",
+    "angular-route": "~1.4.3"
+  }
+}
