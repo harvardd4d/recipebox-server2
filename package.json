@@ -35,5 +35,8 @@
   "scripts": {
     "start": "node wwwroot/server.js",
     "postinstall": "gulp build"
+  },
+  "engines": {
+    "node": "0.12.7"
   }
 }
