@@ -10,7 +10,7 @@ var Ingredient = new Schema({
   name: {type: String, required: true}
 })
 
-var Recipe = db.model("Recipe", new mongoose.Schema({
+var Recipe = mongoose.model("Recipe", new mongoose.Schema({
   name: {type: String, required: true},
   description: {type: String, required: true},
   cuisine: {type: Number, required: true},
