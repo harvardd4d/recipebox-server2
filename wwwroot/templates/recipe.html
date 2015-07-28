@@ -1,4 +1,4 @@
-<div class='container'>
+<div class='container-fluid'>
   <form editable-form name='recipeForm' oncancel="cancel()" onaftersave="saveTable()">
   
     <div> 
@@ -16,7 +16,7 @@
 
     <div>
       <h2>Description</h2>
-      <div editable-textarea="recipe.description" e-rows="7" e-cols="200" style='white-space: pre;' class='well'>{{ recipe.description || 'no description' }}</div>
+      <div editable-textarea="recipe.description" e-rows="7" e-cols="200" style='white-space: pre;' class='well well-sm'>{{ recipe.description || 'no description' }}</div>
     </div>
 
     <div>
@@ -59,7 +59,7 @@
 
     <div>
       <h2>Instructions</h2>
-      <div editable-textarea="recipe.instructions" e-rows="7" e-cols="200" style="white-space: pre;" class='well'>{{ recipe.instructions || 'no instructions' }}</div>
+      <div editable-textarea="recipe.instructions" e-rows="7" e-cols="200" style="white-space: pre;" class='well well-sm'>{{ recipe.instructions || 'no instructions' }}</div>
     </div>
 
     <div class="buttons">
