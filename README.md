@@ -1,5 +1,7 @@
 ## recipebox-server2
-The web server for the RecipeBox project. Built with Node.js, Express.js, Angular.js, MongoDB, and TypeScript.
+The web server for the RecipeBox project. Built with TypeScript, Node.js, Express.js, Angular.js, and MongoDB. This is a work in progress.  
+
+There may be a demo up at https://pc-recipebox.herokuapp.com, but there are no guarantees.
 
 ### Local Setup
 - Grab the repo and run `npm install`. 
